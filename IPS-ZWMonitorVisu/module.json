@@ -1,7 +1,7 @@
 {
 	"id": "{77E12CDE-A726-4963-A080-28DACC4D70A9}",
 	"name": "IPS_ZWMonitorVisu",
-	"type": 2,
+	"type": 3,
 	"vendor": "",
 	"aliases": ["IPS_ZWMonitorVisu"],
 	"parentRequirements": ["{F24B2861-FD7E-4022-B02C-4D9B25233E0B}"],
