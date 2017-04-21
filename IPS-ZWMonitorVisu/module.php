@@ -18,7 +18,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
     $data = json_decode($JSONString);
     // Buffer decodieren und in eine Variable schreiben
     $Buffer = utf8_decode($data->Buffer);
-    $this->SendDebug("Buffer JSON", $Buffer["ZW_ConfiguratorID"],0);
+    $this->SendDebug("Buffer JSON", $Buffer->ZW_ConfiguratorID,0);
     //$Buffer = json_decode($Buffer);
 
   }
