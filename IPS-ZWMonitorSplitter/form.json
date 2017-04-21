@@ -1,0 +1,8 @@
+{
+  "elements":
+  [
+    { "type": "Label", "label": "Konfiguration"},
+    { "name": "ZW_ConfiguratorID", "type": "SelectInstance", "caption": "Z-Wave Konfigurator" },
+    { "name": "ZW_GatewayID", "type": "SelectInstance", "caption": "Z-Wave Gateway" },
+  ]
+}

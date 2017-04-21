@@ -1,0 +1,11 @@
+{
+	"id": "{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}",
+	"name": "IPS_ZWMonitorSplitter",
+	"type": 2,
+	"vendor": "",
+	"aliases": ["IPS_ZWMonitorSplitter"],
+	"parentRequirements": [""],
+	"childRequirements": ["{B263258A-9B90-4303-AC84-70D8DBEEF4DD}"],
+	"implemented": ["{F24B2861-FD7E-4022-B02C-4D9B25233E0B}"],
+	"prefix": "ZWMSplitter"
+}
