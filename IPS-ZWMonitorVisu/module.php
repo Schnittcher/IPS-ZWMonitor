@@ -180,7 +180,7 @@ function connectedNodes() {
     }
 }
 </script>';
-SetValue($this->GetIDForIdent("MeshVisu") ,$ResultPlugin);
+SetValue($this->GetIDForIdent("MeshVisu") ,$VisuCode);
   }
 
   public function getVisu() {
