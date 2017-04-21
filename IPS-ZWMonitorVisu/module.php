@@ -41,8 +41,8 @@ class IPS_ZWMonitorVisu extends IPSModule {
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>';
 
-$ZW_ConfiguratorID = $ZWConfig["ConfiguratorID"] ;
-$ZW_GatewayID = $ZWConfig["GatewayID"];
+$ZW_ConfiguratorID = $ZWConfig->ConfiguratorID ;
+$ZW_GatewayID = $ZWConfig->GatewayID;
 $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
 //print_r($ZW_Nodes);
 $i = 0;
