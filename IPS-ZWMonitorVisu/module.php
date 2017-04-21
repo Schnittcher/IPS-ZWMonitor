@@ -15,6 +15,12 @@ class IPS_ZWMonitorVisu extends IPSModule {
 
   public function ReceiveData($JSONString) {
     $this->SendDebug("ReceiveData JSON", $JSONString,0);
+    $data = json_decode($JSONString);
+    // Buffer decodieren und in eine Variable schreiben
+    $Buffer = utf8_decode($data->Buffer);
+    $this->SendDebug("Buffer JSON", $Buffer,0);
+    //$Buffer = json_decode($Buffer);
+
   }
 
   public function getVisu() {
