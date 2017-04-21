@@ -18,6 +18,7 @@ class IPS_ZWMonitorSplitter extends IPSModule {
     $Buffer = utf8_decode($data->Buffer);
     if ($Buffer  == "getConfig") {
       $config = $this->getConfig();
+      $config = json_encode($config);
       $this->SendDataToChildren(json_encode(Array("DataID" => "{B263258A-9B90-4303-AC84-70D8DBEEF4DD}", "Buffer" => $config)));
     }
   }
@@ -28,3 +29,4 @@ class IPS_ZWMonitorSplitter extends IPSModule {
       return $config;
   }
 }
+?>
