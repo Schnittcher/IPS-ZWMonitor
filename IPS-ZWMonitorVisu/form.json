@@ -1,0 +1,6 @@
+{
+  "elements":
+  [
+    { "type": "SelectEvent", "name": "MeshVisuEventID", "caption": "Timer" },
+  ]
+}
