@@ -5,13 +5,16 @@ class IPS_ZWMonitorVisu extends IPSModule {
     parent::Create();
     //Mit ZWMonitorSplitter vebrinden
     $this->ConnectParent("{A9EAA472-5694-49FA-8D90-1D5AC1A89915}");
+    $this->RegisterVariableInteger("UpdateTimer", 0);
+    $this->RegisterVariableString("MeshVisu", "Mesh Visualisierung", "~HTMLBox");
     $this->RegisterTimer("ZWVisuUpdate", 900000, 'ZWMVisu_getVisu($_IPS[\'TARGET\']);');
   }
 
   public function ApplyChanges() {
     //Never delete this line!
     parent::ApplyChanges();
-    $this->RegisterVariableString("MeshVisu", "Mesh Visualisierung", "~HTMLBox");
+    $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
+    $this->SetTimerInterval("ZWVisuUpdate", $timer);
   }
 
   public function ReceiveData($JSONString) {
