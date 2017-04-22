@@ -15,6 +15,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
     parent::ApplyChanges();
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
     $this->SetTimerInterval("ZWVisuUpdate", $timer);
+    $this->getVisu();
   }
 
   public function ReceiveData($JSONString) {
