@@ -189,7 +189,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
          }
      }
      </script>';
+     return $VisuCode;
   }
-  return $VisuCode;
 }
 ?>
