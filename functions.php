@@ -17,4 +17,5 @@ function getBatteryNodes($ZW_ConfiguratorID, $ZW_GatewayID) {
 		}
 	}
 	return $BatteryNodes;
+}
 ?>
