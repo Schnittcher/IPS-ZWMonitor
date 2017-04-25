@@ -74,7 +74,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
        if ($ZW_Node["NodeSubID"] == 0) {
          $ZW_Routing = ZW_RequestRoutingList($ZW_Node["InstanceID"]);
          foreach ($ZW_Routing as $ZW_RoutingPoint) {
-         if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
+         if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_RoutingPoint, $BatteryNodes)) {
            $JSON["links"][$z] = array('source' => strval("Node ".$ZW_Node["NodeID"]),
                            'target'   => strval("Node ".$ZW_RoutingPoint),
                    'value'	 =>  1);
