@@ -118,10 +118,10 @@ class IPS_ZWMonitorVisu extends IPSModule {
      $ZW_ConfiguratorID = $ZWConfig->ZW_ConfiguratorID ;
      $ZW_GatewayID = $ZWConfig->ZW_GatewayID;
      if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
-       $JSON = getNodes($ZW_ConfiguratorID,$ZW_GatewayID);
+       $JSON = $this->getNodes($ZW_ConfiguratorID,$ZW_GatewayID);
      }
      else {
-       $JSON = getNodesWithBattery($ZW_ConfiguratorID,$ZW_GatewayID);
+       $JSON = $this->getNodesWithBattery($ZW_ConfiguratorID,$ZW_GatewayID);
      }
      $JSON = json_encode($JSON);
      $VisuCode .= "var myjson ='";
