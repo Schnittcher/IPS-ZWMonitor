@@ -36,6 +36,64 @@ class IPS_ZWMonitorVisu extends IPSModule {
     $this->SendDebug("getVisu SendData JSON", $SendData,0);
     $this->SendDataToParent($SendData);
   }
+  //Ohne Batterien
+  private function getNodes($ZW_ConfiguratorID,$ZW_GatewayID) {
+    $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
+    $BatteryNodes = getBatteryNodes($ZW_ConfiguratorID, $ZW_GatewayID);
+    $i = 0;
+    $z = 0;
+    foreach ($ZW_Nodes as $ZW_Node) {
+      $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
+      //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
+      if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
+        $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
+              'name' => strval($ZW_NodeName),
+                      'group'   => 1);
+        if ($ZW_Node["NodeSubID"] == 0) {
+          $ZW_Routing = ZW_RequestRoutingList($ZW_Node["InstanceID"]);
+          foreach ($ZW_Routing as $ZW_RoutingPoint) {
+            if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_RoutingPoint, $BatteryNodes)) {
+              $JSON["links"][$z] = array('source' => strval("Node ".$ZW_Node["NodeID"]),
+                          'target'   => strval("Node ".$ZW_RoutingPoint),
+                  'value'	 =>  1);
+              $z++;
+            }
+          }
+          $i++;
+        }
+      }
+    }
+    return $JSON;
+  }
+
+  //Mit Batterien
+  private function getNodesWithBattery($ZW_ConfiguratorID,$ZW_GatewayID) {
+    $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
+    $i = 0;
+    $z = 0;
+    foreach ($ZW_Nodes as $ZW_Node) {
+      $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
+      //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
+      if ($ZW_Node["NodeID"] <> 1) {
+        $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
+              'name' => strval($ZW_NodeName),
+                      'group'   => 1);
+        if ($ZW_Node["NodeSubID"] == 0) {
+          $ZW_Routing = ZW_RequestRoutingList($ZW_Node["InstanceID"]);
+          foreach ($ZW_Routing as $ZW_RoutingPoint) {
+            if ($ZW_RoutingPoint <> 1) {
+              $JSON["links"][$z] = array('source' => strval("Node ".$ZW_Node["NodeID"]),
+                          'target'   => strval("Node ".$ZW_RoutingPoint),
+                  'value'	 =>  1);
+              $z++;
+            }
+          }
+          $i++;
+        }
+      }
+    }
+    return $JSON;
+  }
 
   private function generateVisu($ZWConfig) {
     $VisuCode = '<!DOCTYPE html>
@@ -59,43 +117,11 @@ class IPS_ZWMonitorVisu extends IPSModule {
 
      $ZW_ConfiguratorID = $ZWConfig->ZW_ConfiguratorID ;
      $ZW_GatewayID = $ZWConfig->ZW_GatewayID;
-     $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
-     $BatteryNodes = getBatteryNodes($ZW_ConfiguratorID, $ZW_GatewayID);
-     //print_r($ZW_Nodes);
-     $i = 0;
-     $z = 0;
-     foreach ($ZW_Nodes as $ZW_Node) {
-       $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
-       //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
-       if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
-          if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes))
-       }
-       else {
-         if ($ZW_Node["NodeID"] <> 1)
-       }
-        {
-       $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
-               'name' => strval($ZW_NodeName),
-                       'group'   => 1);
-       if ($ZW_Node["NodeSubID"] == 0) {
-         $ZW_Routing = ZW_RequestRoutingList($ZW_Node["InstanceID"]);
-         foreach ($ZW_Routing as $ZW_RoutingPoint) {
-            if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
-              if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_RoutingPoint, $BatteryNodes))
-            }
-            else {
-              if ($ZW_RoutingPoint <> 1)
-            }  
-          {
-           $JSON["links"][$z] = array('source' => strval("Node ".$ZW_Node["NodeID"]),
-                           'target'   => strval("Node ".$ZW_RoutingPoint),
-                   'value'	 =>  1);
-           $z++;
-         }
-         }
-           $i++;
-         }
-       }
+     if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
+       $JSON = getNodes($ZW_ConfiguratorID,$ZW_GatewayID);
+     }
+     else {
+       $JSON = getNodesWithBattery($ZW_ConfiguratorID,$ZW_GatewayID);
      }
      $JSON = json_encode($JSON);
      $VisuCode .= "var myjson ='";
