@@ -8,6 +8,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
     $this->RequireParent("{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}");
     $this->RegisterVariableString("MeshVisu", "Mesh Visualisierung", "~HTMLBox");
     $this->RegisterPropertyInteger("UpdateTimer", 15);
+    $this->RegisterPropertyBoolean("BatteryNodes", false);
     $this->RegisterTimer("ZWVisuUpdate", 900000, 'ZWMVisu_getVisu($_IPS[\'TARGET\']);');
   }
 
@@ -66,15 +67,26 @@ class IPS_ZWMonitorVisu extends IPSModule {
      foreach ($ZW_Nodes as $ZW_Node) {
        $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
        //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
-
-       if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
+       if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
+          if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes))
+       }
+       else {
+         if ($ZW_Node["NodeID"] <> 1)
+       }
+        {
        $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
                'name' => strval($ZW_NodeName),
                        'group'   => 1);
        if ($ZW_Node["NodeSubID"] == 0) {
          $ZW_Routing = ZW_RequestRoutingList($ZW_Node["InstanceID"]);
          foreach ($ZW_Routing as $ZW_RoutingPoint) {
-         if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_RoutingPoint, $BatteryNodes)) {
+            if ($this->ReadPropertyBoolean("BatteryNodes") == true) {
+              if ($ZW_RoutingPoint <> 1 AND !in_array($ZW_RoutingPoint, $BatteryNodes))
+            }
+            else {
+              if ($ZW_RoutingPoint <> 1)
+            }  
+          {
            $JSON["links"][$z] = array('source' => strval("Node ".$ZW_Node["NodeID"]),
                            'target'   => strval("Node ".$ZW_RoutingPoint),
                    'value'	 =>  1);

@@ -2,5 +2,6 @@
   "elements":
   [
     { "type": "IntervalBox", "name": "UpdateTimer", "caption": "Minuten" },
+    { "type": "CheckBox", "name": "BatteryNodes", "caption": "Batteriebetriebene Geräte ausblenden" },
   ]
 }
