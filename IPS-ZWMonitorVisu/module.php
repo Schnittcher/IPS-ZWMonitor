@@ -58,6 +58,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
      $ZW_ConfiguratorID = $ZWConfig->ZW_ConfiguratorID ;
      $ZW_GatewayID = $ZWConfig->ZW_GatewayID;
      $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
+     $BatteryNodes = getBatteryNodes($ZW_ConfiguratorID, $ZW_GatewayID);
      //print_r($ZW_Nodes);
      $i = 0;
      $z = 0;
@@ -65,7 +66,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
        $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
        //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
 
-       if ($ZW_Node["NodeID"] <> 1) {
+       if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
        $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
                'name' => strval($ZW_NodeName),
                        'group'   => 1);
