@@ -49,8 +49,8 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     foreach ($ZW_Nodes as $ZW_Node) {
       if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
         $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
-        if (IPS_GetVariableIDByName("NodeID ".$ZW_Node["NodeID"],$this->InstanceID) == false) {
-          $this->RegisterVariableBoolean("NodeID ".$ZW_Node["NodeID"], $ZW_NodeName);
+        if (IPS_GetVariableIDByName("NodeID".$ZW_Node["NodeID"],$this->InstanceID) == false) {
+          $this->RegisterVariableBoolean("NodeID".$ZW_Node["NodeID"], $ZW_NodeName);
         }
       }
     }
