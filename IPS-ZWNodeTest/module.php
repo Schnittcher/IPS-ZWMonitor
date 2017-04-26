@@ -1,6 +1,6 @@
 <?
 require_once(__DIR__ . "/../functions.php");
-class IPS_ZWMonitorVisu extends IPSModule {
+class IPS_ZWMonitorNodeTest extends IPSModule {
   public function Create() {
     //Never delete this line!
     parent::Create();
