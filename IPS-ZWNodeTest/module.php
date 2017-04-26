@@ -39,7 +39,7 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     foreach ($ZW_Nodes as $ZW_Node) {
       if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
         $NodeStatus = ZW_Test($ZW_Node["InstanceID"]);
-        $NodeStatusVariable = @IPS_GetVariableIDByName("NodeID".$ZW_Node["NodeID"],$this->InstanceID);
+        $NodeStatusVariable = @IPS_GetObjectIDByIdent("NodeID".$ZW_Node["NodeID"],$this->InstanceID);
         SetValue($NodeStatusVariable,$NodeStatus);
       }
     }
