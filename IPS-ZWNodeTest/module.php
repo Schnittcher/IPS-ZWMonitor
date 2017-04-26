@@ -25,9 +25,28 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     $this->SendDebug("Buffer JSON", $Buffer,0);
     $ZWConfig = json_decode($Buffer);
     $this->createVariablen($ZWConfig);
+    $this->NodeTest($ZWConfig);
   }
 
-  public function NodeTest() {
+  //Führ den NodeTest durch
+  public function NodeTest($ZWConfig) {
+    $ZW_ConfiguratorID = $ZWConfig->ZW_ConfiguratorID ;
+    $ZW_GatewayID = $ZWConfig->ZW_GatewayID;
+
+    $ZW_Nodes = ZW_GetKnownDevices($ZW_ConfiguratorID);
+    $BatteryNodes = getBatteryNodes($ZW_ConfiguratorID, $ZW_GatewayID);
+
+    foreach ($ZW_Nodes as $ZW_Node) {
+      if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
+        $NodeStatus = ZW_Test($ZW_Node["InstanceID"]);
+        $NodeStatusVariable = @IPS_GetVariableIDByName("NodeID".$ZW_Node["NodeID"],$this->InstanceID);
+        SetValue($NodeStatusVariable,$NodeStatus);
+      }
+    }
+  }
+
+  //Holt die Config aus dem Splitter und startet somit den NodeTest
+  public function NodeTestStart() {
     $SendData = json_encode(Array("DataID" => "{F24B2861-FD7E-4022-B02C-4D9B25233E0B}", "Buffer" => "getConfig"));
     $this->SendDebug("getVisu SendData JSON", $SendData,0);
     $this->SendDataToParent($SendData);
@@ -35,10 +54,9 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
 
   //private function createVariablenProfile() {
 
-
   //}
 
-
+  //Legt die Variablen für den Status an, wenn diese noch nicht vorhanden sind
   private function createVariablen($ZWConfig) {
     $ZW_ConfiguratorID = $ZWConfig->ZW_ConfiguratorID ;
     $ZW_GatewayID = $ZWConfig->ZW_GatewayID;
