@@ -14,7 +14,9 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
   public function ApplyChanges() {
     //Never delete this line!
     parent::ApplyChanges();
+    $this->createVariablenProfile();
     $this->NodeTest();
+
   }
 
   public function ReceiveData($JSONString) {
@@ -52,9 +54,14 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     $this->SendDataToParent($SendData);
   }
 
-  //private function createVariablenProfile() {
-
-  //}
+  private function createVariablenProfile() {
+    $VariablenProfile = IPS_GetVariableProfileList();
+      if (!in_array("ZWMNodeTest",$VariablenProfile)) {
+      IPS_CreateVariableProfile("ZWMNodeTest", 0);
+      IPS_SetVariableProfileAssociation("ZWMNodeTest", 1, "OK", "", 0x99FF33);
+      IPS_SetVariableProfileAssociation("ZWMNodeTest", 0, "Nicht OK", "", 0xFF0000);
+    }
+  }
 
   //Legt die Variablen für den Status an, wenn diese noch nicht vorhanden sind
   private function createVariablen($ZWConfig) {
@@ -68,7 +75,7 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
       if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
         $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
         if (@IPS_GetVariableIDByName("NodeID".$ZW_Node["NodeID"],$this->InstanceID) == false) {
-          $this->RegisterVariableBoolean("NodeID".$ZW_Node["NodeID"], $ZW_NodeName);
+          $this->RegisterVariableBoolean("NodeID".$ZW_Node["NodeID"], $ZW_NodeName,"ZWMNodeTest");
         }
       }
     }
