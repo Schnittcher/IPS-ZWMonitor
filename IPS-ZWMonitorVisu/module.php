@@ -45,7 +45,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
     foreach ($ZW_Nodes as $ZW_Node) {
       $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
       //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
-      if ($ZW_Node["NodeID"] <> 1 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
+      if ($ZW_Node["NodeID"] <> 1 AND $ZW_Node["NodeSubID"] == 0 AND !in_array($ZW_Node["NodeID"], $BatteryNodes)) {
         $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
               'name' => strval($ZW_NodeName),
                       'group'   => 1);
@@ -74,7 +74,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
     foreach ($ZW_Nodes as $ZW_Node) {
       $ZW_NodeName = IPS_GetObject($ZW_Node["InstanceID"])["ObjectName"];
       //print_r(ZW_RequestRoutingList($ZW_Node["InstanceID"]));
-      if ($ZW_Node["NodeID"] <> 1) {
+      if ($ZW_Node["NodeID"] <> 1 AND $ZW_Node["NodeSubID"] == 0) {
         $JSON["nodes"][$i] = array('id' => strval("Node ".$ZW_Node["NodeID"]),
               'name' => strval($ZW_NodeName),
                       'group'   => 1);
