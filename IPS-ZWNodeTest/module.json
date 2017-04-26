@@ -1,0 +1,11 @@
+{
+	"id": "{93554F81-8247-4117-886A-2536539F0506}",
+	"name": "IPS_ZWMonitorNodeTest",
+	"type": 3,
+	"vendor": "",
+	"aliases": ["IPS_ZWMonitorNodeTest"],
+	"parentRequirements": ["{F24B2861-FD7E-4022-B02C-4D9B25233E0B}"],
+	"childRequirements": [""],
+	"implemented": ["{B263258A-9B90-4303-AC84-70D8DBEEF4DD}"],
+	"prefix": "ZWMNodeTest"
+}
