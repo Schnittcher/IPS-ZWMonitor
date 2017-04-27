@@ -8,15 +8,16 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     $this->RequireParent("{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}");
     $this->RegisterPropertyInteger("UpdateTimer", 15);
     $this->RegisterPropertyBoolean("BatteryNodes", false);
-    $this->RegisterTimer("ZWNodeTestUpdate", 900000, 'ZWMVisu_getVisu($_IPS[\'TARGET\']);');
+    $this->RegisterTimer("ZWNodeTestUpdate", 900000, 'ZWMNodeTest_NodeTestStart($_IPS[\'TARGET\']);');
   }
 
   public function ApplyChanges() {
     //Never delete this line!
     parent::ApplyChanges();
     $this->createVariablenProfile();
-    $this->NodeTest();
-
+    $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
+    $this->SetTimerInterval("ZWNodeTestUpdate", $timer);
+    $this->NodeTestStart();
   }
 
   public function ReceiveData($JSONString) {

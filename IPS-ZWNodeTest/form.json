@@ -1,0 +1,6 @@
+{
+  "elements":
+  [
+    { "type": "IntervalBox", "name": "UpdateTimer", "caption": "Minuten" },
+  ]
+}
