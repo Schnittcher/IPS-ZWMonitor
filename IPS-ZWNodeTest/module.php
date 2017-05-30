@@ -18,6 +18,7 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
     if ($this->ReadPropertyInteger("UpdateTimer") < 5) {
       $this->SetStatus(201);
+      return false;
     }
     $this->SetTimerInterval("ZWNodeTestUpdate", $timer);
     $this->NodeTestStart();
