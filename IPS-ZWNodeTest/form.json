@@ -2,5 +2,9 @@
   "elements":
   [
     { "type": "IntervalBox", "name": "UpdateTimer", "caption": "Minuten" },
+  ],
+  "status":
+  [
+      { "code": 201, "icon": "error", "caption": "Das Update Interval darf nicht unter 5 Minuten betragen." }
   ]
 }
