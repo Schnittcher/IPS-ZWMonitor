@@ -147,5 +147,4 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
               return $inst['InstanceStatus'];
           }
 }
-}
 ?>
