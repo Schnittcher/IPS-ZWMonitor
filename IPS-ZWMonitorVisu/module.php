@@ -16,13 +16,18 @@ class IPS_ZWMonitorVisu extends IPSModule {
     //Never delete this line!
     parent::ApplyChanges();
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
-    $this->SetTimerInterval("ZWVisuUpdate", $timer);
-    if ((IPS_GetKernelRunlevel() == 10103) AND ($this->HasActiveParent() == true)) { 
+    if ($this->ReadPropertyInteger("UpdateTimer") < 5) {
+      $this->SetStatus(201);
+      return false;
+    }
+    if ((IPS_GetKernelRunlevel() == 10103) AND ($this->HasActiveParent() == true)) {
       $this->getVisu();
+      $this->SetStatus(102);
     }
     else {
       $this->SetStatus(104);
     }
+    $this->SetTimerInterval("ZWVisuUpdate", $timer);
   }
 
   public function ReceiveData($JSONString) {

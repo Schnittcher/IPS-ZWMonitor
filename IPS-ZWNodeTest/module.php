@@ -22,11 +22,13 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
     }
     if ((IPS_GetKernelRunlevel() == 10103) AND ($this->HasActiveParent() == true)) {
       $this->NodeTestStart();
+      $this->SetStatus(102);
     }
     else {
       $this->SetStatus(104);
     }
     $this->SetTimerInterval("ZWNodeTestUpdate", $timer);
+      $this->SetStatus(102);
   }
 
   public function ReceiveData($JSONString) {
