@@ -18,7 +18,12 @@ class IPS_ZWMonitorVisu extends IPSModule {
     $this->ConnectParent("{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}");
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
     $this->SetTimerInterval("ZWVisuUpdate", $timer);
-    $this->getVisu();
+    if (IPS_GetKernelRunlevel() == 10103) {
+      $this->getVisu();
+    }
+    else {
+      $this->SetStatus(104);
+    }
   }
 
   public function ReceiveData($JSONString) {

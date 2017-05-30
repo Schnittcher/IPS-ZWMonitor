@@ -21,8 +21,13 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
       $this->SetStatus(201);
       return false;
     }
+    if (IPS_GetKernelRunlevel() == 10103) {
+      $this->NodeTestStart();
+    }
+    else {
+      $this->SetStatus(104);
+    }
     $this->SetTimerInterval("ZWNodeTestUpdate", $timer);
-    $this->NodeTestStart();
   }
 
   public function ReceiveData($JSONString) {
