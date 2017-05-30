@@ -15,6 +15,7 @@ class IPS_ZWMonitorVisu extends IPSModule {
   public function ApplyChanges() {
     //Never delete this line!
     parent::ApplyChanges();
+    $this->ConnectParent("{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}");
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
     $this->SetTimerInterval("ZWVisuUpdate", $timer);
     $this->getVisu();
