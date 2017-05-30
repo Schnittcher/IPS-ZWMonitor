@@ -5,6 +5,8 @@
   ],
   "status":
   [
+      { "code": 102, "icon": "active", "caption": "Das Update Interval wurde gesetzt." },
+      { "code": 104, "icon": "error", "caption": "Die Parent Instanz ist noch nicht bereit." },
       { "code": 201, "icon": "error", "caption": "Das Update Interval darf nicht unter 5 Minuten betragen." }
   ]
 }
