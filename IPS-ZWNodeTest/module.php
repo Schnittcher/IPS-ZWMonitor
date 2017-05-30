@@ -14,7 +14,6 @@ class IPS_ZWMonitorNodeTest extends IPSModule {
   public function ApplyChanges() {
     //Never delete this line!
     parent::ApplyChanges();
-    $this->ConnectParent("{D10DFC0B-ED29-4EC1-B5B4-9975D2549B79}");
     $this->createVariablenProfile();
     $timer = $this->ReadPropertyInteger("UpdateTimer") * 60000;
     if ($this->ReadPropertyInteger("UpdateTimer") < 5) {
