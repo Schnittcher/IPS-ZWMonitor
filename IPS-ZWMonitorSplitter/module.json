@@ -4,7 +4,7 @@
 	"type": 2,
 	"vendor": "",
 	"aliases": ["IPS_ZWMonitorSplitter"],
-	"parentRequirements": [""],
+	"parentRequirements": [],
 	"childRequirements": ["{B263258A-9B90-4303-AC84-70D8DBEEF4DD}"],
 	"implemented": ["{F24B2861-FD7E-4022-B02C-4D9B25233E0B}"],
 	"prefix": "ZWMSplitter"
